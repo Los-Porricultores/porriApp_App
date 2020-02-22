@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:porri_app/src/controllers/database.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
+import 'package:porri_app/src/controllers/session.dart';
 
 class MainController {
   StreamController<bool> initCompleteStream = StreamController();
@@ -15,7 +16,8 @@ class MainController {
     setUp();
 
     // database
-    await sl<DatabaseController>().init();
+    await sl<DatabaseController>().setUp();
+    await sl<SessionController>().searchAnySessionActive();
 
     // complete
     initCompleteStream.sink.add(true);

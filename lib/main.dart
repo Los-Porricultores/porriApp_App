@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:porri_app/src/controllers/main.dart';
+import 'package:porri_app/src/controllers/serviceLocator.dart';
+import 'package:porri_app/src/models/session.dart';
 import 'package:porri_app/src/pages/splash.dart';
+import 'package:porri_app/src/states/session.dart';
 
 void main() {
   // main controller
@@ -14,20 +17,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: StreamBuilder<bool>(
-            stream: mainController.initCompleteStream.stream,
-            initialData: false,
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.hasData && snapshot.data) {
-                return MyHomePage(title: 'Flutter Demo Home Page');
-              }
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: StreamBuilder<bool>(
+        stream: mainController.initCompleteStream.stream,
+        initialData: false,
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.hasData && snapshot.data) {
+            return StreamBuilder<SessionModel>(
+              stream: sl<SessionState>().updatedSessionStream.stream,
+              initialData: sl<SessionState>().sessionModel,
+              builder:
+                  (BuildContext context, AsyncSnapshot<SessionModel> snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return MyHomePage(title: 'Flutter Demo Home Page');
+                }
 
-              return Splash();
-            }));
+                return Container(
+                  alignment: Alignment.center,
+                  child: Text('LOGIN'),
+                );
+              },
+            );
+          }
+
+          return Splash();
+        },
+      ),
+    );
   }
 }
 
