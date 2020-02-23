@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class LoginController {
+  int errorContainerFlex = 1;
   TextEditingController usernameController = TextEditingController(),
       passwordController = TextEditingController();
 
@@ -29,8 +30,7 @@ class LoginController {
     // password validation
     String password = passwordController.text;
     if (password.isEmpty) {
-      validationErrorStream.sink
-          .add('Sabemos que tienes una contraseña, no te hagas de rogar...');
+      validationErrorStream.sink.add('¡Necesitamos tu contraseña!');
       return false;
     }
 
