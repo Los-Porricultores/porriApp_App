@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:porri_app/src/controllers/main.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/models/session.dart';
+import 'package:porri_app/src/pages/login.dart';
 import 'package:porri_app/src/pages/splash.dart';
 import 'package:porri_app/src/states/session.dart';
 
@@ -35,10 +36,7 @@ class MyApp extends StatelessWidget {
                   return MyHomePage(title: 'Flutter Demo Home Page');
                 }
 
-                return Container(
-                  alignment: Alignment.center,
-                  child: Text('LOGIN'),
-                );
+                return Login();
               },
             );
           }
