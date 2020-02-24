@@ -22,34 +22,37 @@ class Login extends StatelessWidget {
                 ),
               ),
             ),
-            TextFormField(
+            TextField(
               controller: sl<LoginController>().usernameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 icon: Icon(Icons.person),
                 hintText: 'Utiliza tu alias porricultor...',
                 labelText: 'Usuario',
+                suffix: IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    sl<LoginController>().clearUsername();
+                  },
+                ),
               ),
             ),
             TextFormField(
               controller: sl<LoginController>().passwordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 icon: Icon(Icons.vpn_key),
                 hintText: 'Que nadie te vea...',
                 labelText: 'Contraseña',
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: RaisedButton(
-                color: Colors.white,
-                onPressed: () {
-                  sl<LoginController>().sendLogin();
-                },
-                child: Text(
-                  'Entrar',
-                  style: TextStyle(
-                    color: Colors.black,
+                suffix: IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.white,
                   ),
+                  onPressed: () {
+                    sl<LoginController>().clearPassword();
+                  },
                 ),
               ),
             ),
@@ -57,22 +60,36 @@ class Login extends StatelessWidget {
               stream: sl<LoginController>().validationErrorStream.stream,
               initialData: null,
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                    child: Text(
-                      snapshot.data,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.purpleAccent,
-                        fontSize: 18,
-                      ),
-                    ),
-                  );
-                }
-
-                return Container();
+                return Container(
+                  padding: EdgeInsets.symmetric(vertical: 50, horizontal: 40),
+                  child: snapshot.hasData
+                      ? Text(
+                          snapshot.data,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.purpleAccent,
+                            fontSize: 18,
+                          ),
+                        )
+                      : Container(),
+                );
               },
+            ),
+            OutlineButton(
+              child: Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: Text('Entrar'),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 15),
+              onPressed: () {
+                sl<LoginController>().sendLogin();
+              },
+              highlightedBorderColor: Colors.white,
+              borderSide: BorderSide(
+                color: Colors.white,
+                style: BorderStyle.solid,
+              ),
             ),
           ],
         ),

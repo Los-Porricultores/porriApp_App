@@ -37,4 +37,12 @@ class LoginController {
     validationErrorStream.sink.add(null);
     return true;
   }
+
+  void clearUsername() {
+    usernameController.clear();
+  }
+
+  void clearPassword() {
+    passwordController.clear();
+  }
 }
