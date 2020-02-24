@@ -6,7 +6,8 @@ import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/controllers/session.dart';
 
 class MainController {
-  StreamController<bool> initCompleteStream = StreamController();
+  StreamController<bool> initCompleteStream = StreamController(),
+      fullLoaderStream = StreamController();
 
   void init() async {
     // binding
@@ -25,6 +26,15 @@ class MainController {
 
   void dispose() {
     initCompleteStream.close();
+    fullLoaderStream.close();
+  }
+
+  void showFullLoader() {
+    fullLoaderStream.sink.add(true);
+  }
+
+  void hideFullLoader() {
+    fullLoaderStream.sink.add(false);
   }
 }
 

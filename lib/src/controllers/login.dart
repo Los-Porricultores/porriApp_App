@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:porri_app/src/controllers/main.dart';
 
 class LoginController {
   int errorContainerFlex = 1;
@@ -14,6 +15,7 @@ class LoginController {
   }
 
   void sendLogin() {
+    mainController.showFullLoader();
     if (isLoginFormValid()) {
       print('login');
     }

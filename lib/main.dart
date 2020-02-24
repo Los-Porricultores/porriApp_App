@@ -5,6 +5,7 @@ import 'package:porri_app/src/models/session.dart';
 import 'package:porri_app/src/pages/login.dart';
 import 'package:porri_app/src/pages/splash.dart';
 import 'package:porri_app/src/states/session.dart';
+import 'package:porri_app/src/widgets/fullLoader.dart';
 
 void main() {
   // main controller
@@ -31,16 +32,26 @@ class MyApp extends StatelessWidget {
         initialData: false,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data) {
-            return StreamBuilder<SessionModel>(
-              stream: sl<SessionState>().updatedSessionStream.stream,
-              initialData: sl<SessionState>().sessionModel,
-              builder:
-                  (BuildContext context, AsyncSnapshot<SessionModel> snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                  return MyHomePage(title: 'Flutter Demo Home Page');
+            return StreamBuilder<bool>(
+              stream: mainController.fullLoaderStream.stream,
+              initialData: false,
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (!snapshot.data) {
+                  return StreamBuilder<SessionModel>(
+                    stream: sl<SessionState>().updatedSessionStream.stream,
+                    initialData: sl<SessionState>().sessionModel,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<SessionModel> snapshot) {
+                      if (snapshot.hasData && snapshot.data != null) {
+                        return MyHomePage(title: 'Flutter Demo Home Page');
+                      }
+
+                      return Login();
+                    },
+                  );
                 }
 
-                return Login();
+                return FullLoader();
               },
             );
           }
