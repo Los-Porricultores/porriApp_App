@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "28672641319",
+    "firebase_url": "https://porri-app.firebaseio.com",
+    "project_id": "porri-app",
+    "storage_bucket": "porri-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28672641319:android:9c0787131ba7eed17c0102",
+        "android_client_info": {
+          "package_name": "com.porricultores.porri_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28672641319-5badt1nd09u0h70hfltelj0b5ntchc6l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.porricultores.porri_app",
+            "certificate_hash": "3dff26b544cb081c626401bedb1a51eae326667f"
+          }
+        },
+        {
+          "client_id": "28672641319-9vh6dn6btom9hu8tdn5m4q47lavugopm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSJsadM3MlmMDRineE7T3ViC3rEJ_gK-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28672641319-9vh6dn6btom9hu8tdn5m4q47lavugopm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
