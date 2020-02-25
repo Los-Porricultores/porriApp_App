@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class SessionModel {
-  int id, userId;
+  int id;
+  String userId;
   bool isActive;
   DateTime lastLoginDateTime, lastLogoutDateTime;
 

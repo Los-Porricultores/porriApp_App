@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
                     builder: (BuildContext context,
                         AsyncSnapshot<SessionModel> snapshot) {
                       if (snapshot.hasData && snapshot.data != null) {
+                        mainController.hideFullLoader();
                         return MyHomePage(title: 'Flutter Demo Home Page');
                       }
 

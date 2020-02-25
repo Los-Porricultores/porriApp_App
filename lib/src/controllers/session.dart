@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:porri_app/resources/constants/database.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/models/session.dart';
@@ -14,14 +15,14 @@ class SessionController {
           ' isActive INTEGER NOT NULL,'
           ' lastLoginDateTime INTEGER,'
           ' lastLogoutDateTime INTEGER,'
-          ' userId INTEGER NOT NULL)',
+          ' userId TEXT NOT NULL)',
         );
   }
 
   Future<bool> searchAnySessionActive() async {
     List<Map<String, dynamic>> sessions =
         await sl<DatabaseState>().database.query(
-              'sessions',
+              sessionsTableName,
               where: 'isActive = 1',
               orderBy: 'lastLoginDateTime DESC',
             );
@@ -31,9 +32,11 @@ class SessionController {
         session: SessionModel(
           id: sessions.first['id'],
           userId: sessions.first['userId'],
-          isActive: sessions.first['isActive'],
-          lastLoginDateTime: sessions.first['lastLoginDateTime'],
-          lastLogoutDateTime: sessions.first['lastLogoutDateTime'],
+          isActive: true,
+          lastLoginDateTime: DateTime.fromMillisecondsSinceEpoch(
+              sessions.first['lastLoginDateTime']),
+          lastLogoutDateTime: DateTime.fromMillisecondsSinceEpoch(
+              sessions.first['lastLogoutDateTime']),
         ),
       );
 
@@ -41,5 +44,27 @@ class SessionController {
     }
 
     return false;
+  }
+
+  void saveSession(FirebaseUser user) async {
+    int time = DateTime.now().millisecondsSinceEpoch;
+    int success = await sl<DatabaseState>().database.insert(sessionsTableName, {
+      'userId': user.uid,
+      'isActive': 1,
+      'lastLoginDateTime': time,
+      'lastLogoutDateTime': 0,
+    });
+
+    if (success > 0) {
+      sl<SessionState>().setSession(
+        session: SessionModel(
+          id: null,
+          userId: user.uid.toString(),
+          isActive: true,
+          lastLoginDateTime: DateTime.fromMillisecondsSinceEpoch(time),
+          lastLogoutDateTime: DateTime.fromMillisecondsSinceEpoch(time),
+        ),
+      );
+    }
   }
 }
