@@ -1,98 +1,85 @@
 import 'package:flutter/material.dart';
-import 'package:porri_app/src/controllers/login.dart';
-import 'package:porri_app/src/controllers/serviceLocator.dart';
+import 'package:porri_app/resources/constants/imagePaths.dart';
 
 class Login extends StatelessWidget {
+  final String loginButtonText = 'Entrar',
+      emailInputLabel = 'E-mail',
+      passwordInputLabel = 'Password';
+  final double loginButtonHeight = 50,
+      loginButtonRadius = 15,
+      loginButtonVerticalMargin = 20;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(20),
-        alignment: Alignment.center,
+      body: Center(
         child: Flex(
           direction: Axis.vertical,
           children: <Widget>[
             Expanded(
-              flex: 2,
+              flex: 6,
+              child: Image.asset(
+                porriLogo,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Expanded(
+              flex: 4,
               child: Container(
-                padding: EdgeInsets.all(25),
-                child: Image.asset(
-                  'lib/resources/images/porricultor_logo.png',
-                  fit: BoxFit.contain,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: ListView(
+                  physics: ClampingScrollPhysics(),
+                  children: <Widget>[
+                    _loginInputWidget(label: emailInputLabel),
+                    _loginInputWidget(label: passwordInputLabel),
+                    _errorMessageWidget(),
+                  ],
                 ),
               ),
             ),
-            TextField(
-              controller: sl<LoginController>().usernameController,
-              decoration: InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: 'Utiliza tu alias porricultor...',
-                labelText: 'Usuario',
-                suffix: IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    sl<LoginController>().clearUsername();
-                  },
-                ),
-              ),
-            ),
-            TextFormField(
-              controller: sl<LoginController>().passwordController,
-              decoration: InputDecoration(
-                icon: Icon(Icons.vpn_key),
-                hintText: 'Que nadie te vea...',
-                labelText: 'Contraseña',
-                suffix: IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    sl<LoginController>().clearPassword();
-                  },
-                ),
-              ),
-            ),
-            StreamBuilder<String>(
-              stream: sl<LoginController>().validationErrorStream.stream,
-              initialData: null,
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                return Container(
-                  padding: EdgeInsets.symmetric(vertical: 50, horizontal: 40),
-                  child: snapshot.hasData
-                      ? Text(
-                          snapshot.data,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.purpleAccent,
-                            fontSize: 18,
-                          ),
-                        )
-                      : Container(),
-                );
-              },
-            ),
-            OutlineButton(
-              child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: Text('Entrar'),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 15),
-              onPressed: () {
-                sl<LoginController>().sendLogin();
-              },
-              highlightedBorderColor: Colors.white,
-              borderSide: BorderSide(
-                color: Colors.white,
-                style: BorderStyle.solid,
-              ),
-            ),
+            _loginButtonWidget(onPressed: () {}),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _loginInputWidget({@required label}) {
+    return TextField(
+      decoration: InputDecoration(labelText: label),
+    );
+  }
+
+  Widget _errorMessageWidget() {
+    return Container(
+      height: 50,
+    );
+  }
+
+  Widget _loginButtonWidget({@required Function onPressed}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: loginButtonVerticalMargin),
+      child: RaisedButton(
+        child: Container(
+          width: double.infinity,
+          height: loginButtonHeight,
+          alignment: Alignment.center,
+          child: Text(
+            loginButtonText,
+          ),
+        ),
+        color: Colors.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            loginButtonRadius,
+          ),
+          side: BorderSide(
+            color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+          onPressed();
+        },
       ),
     );
   }

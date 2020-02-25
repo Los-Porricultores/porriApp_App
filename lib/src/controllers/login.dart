@@ -2,18 +2,16 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:porri_app/src/controllers/main.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/controllers/session.dart';
-import 'package:porri_app/src/states/session.dart';
 
 class LoginController {
   int errorContainerFlex = 1;
   TextEditingController usernameController = TextEditingController(),
       passwordController = TextEditingController();
 
-  StreamController<String> validationErrorStream = StreamController();
+  StreamController<String> validationErrorStream = StreamController.broadcast();
 
   FirebaseAuth firebaseAuth;
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/controllers/session.dart';
-import 'package:porri_app/src/controllers/user.dart';
 import 'package:porri_app/src/states/database.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -30,6 +29,5 @@ class DatabaseController {
 
   void createTables() async {
     await sl<SessionController>().createTable();
-    await sl<UserController>().createTable();
   }
 }

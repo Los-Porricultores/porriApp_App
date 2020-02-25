@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:porri_app/src/controllers/database.dart';
 import 'package:porri_app/src/controllers/login.dart';
 import 'package:porri_app/src/controllers/session.dart';
-import 'package:porri_app/src/controllers/user.dart';
 import 'package:porri_app/src/states/database.dart';
 import 'package:porri_app/src/states/session.dart';
 
@@ -18,6 +17,5 @@ Future<void> setUp() async {
       signalsReady: true);
   sl.registerSingleton<SessionController>(SessionController(),
       signalsReady: true);
-  sl.registerSingleton<UserController>(UserController(), signalsReady: true);
   sl.registerSingleton<LoginController>(LoginController(), signalsReady: true);
 }
