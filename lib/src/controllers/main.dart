@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:porri_app/src/controllers/database.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/controllers/session.dart';
+import 'package:porri_app/src/streams/streamsController.dart';
 
 class MainController {
-  StreamController<bool> initCompleteStream = StreamController.broadcast(),
-      fullLoaderStream = StreamController.broadcast();
-
   void init() async {
     // binding
     WidgetsFlutterBinding.ensureInitialized();
@@ -21,20 +19,15 @@ class MainController {
     await sl<SessionController>().searchAnySessionActive();
 
     // complete
-    initCompleteStream.sink.add(true);
-  }
-
-  void dispose() {
-    initCompleteStream.close();
-    fullLoaderStream.close();
+    sl<StreamsController>().initCompleteStream.sink.add(true);
   }
 
   void showFullLoader() {
-    fullLoaderStream.sink.add(true);
+    sl<StreamsController>().fullLoaderStream.sink.add(true);
   }
 
   void hideFullLoader() {
-    fullLoaderStream.sink.add(false);
+    sl<StreamsController>().fullLoaderStream.sink.add(false);
   }
 }
 

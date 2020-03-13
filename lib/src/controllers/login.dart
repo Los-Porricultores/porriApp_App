@@ -5,22 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:porri_app/src/controllers/main.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/controllers/session.dart';
+import 'package:porri_app/src/streams/streamsController.dart';
 
 class LoginController {
   int errorContainerFlex = 1;
   TextEditingController usernameController = TextEditingController(),
       passwordController = TextEditingController();
 
-  StreamController<String> validationErrorStream = StreamController.broadcast();
-
   FirebaseAuth firebaseAuth;
 
   LoginController() {
     firebaseAuth = FirebaseAuth.instance;
-  }
-
-  void dispose() {
-    validationErrorStream.close();
   }
 
   void sendLogin() async {
@@ -38,7 +33,10 @@ class LoginController {
         },
       ).catchError(
         (error) {
-          validationErrorStream.sink.add(error.message);
+          sl<StreamsController>()
+              .registerValidationErrorStream
+              .sink
+              .add(error.message);
           mainController.hideFullLoader();
         },
       );
@@ -49,18 +47,24 @@ class LoginController {
     // username validation
     String username = usernameController.text;
     if (username.isEmpty) {
-      validationErrorStream.sink.add('¡Necesitamos tu usuario!');
+      sl<StreamsController>()
+          .registerValidationErrorStream
+          .sink
+          .add('¡Necesitamos tu usuario!');
       return false;
     }
 
     // password validation
     String password = passwordController.text;
     if (password.isEmpty) {
-      validationErrorStream.sink.add('¡Necesitamos tu contraseña!');
+      sl<StreamsController>()
+          .registerValidationErrorStream
+          .sink
+          .add('¡Necesitamos tu contraseña!');
       return false;
     }
 
-    validationErrorStream.sink.add(null);
+    sl<StreamsController>().registerValidationErrorStream.sink.add(null);
     return true;
   }
 

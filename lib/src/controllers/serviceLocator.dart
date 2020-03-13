@@ -4,6 +4,7 @@ import 'package:porri_app/src/controllers/login.dart';
 import 'package:porri_app/src/controllers/session.dart';
 import 'package:porri_app/src/states/database.dart';
 import 'package:porri_app/src/states/session.dart';
+import 'package:porri_app/src/streams/streamsController.dart';
 
 GetIt sl = GetIt.asNewInstance();
 
@@ -14,6 +15,8 @@ Future<void> setUp() async {
 
   // controllers
   sl.registerSingleton<DatabaseController>(DatabaseController(),
+      signalsReady: true);
+  sl.registerSingleton<StreamsController>(StreamsController(),
       signalsReady: true);
   sl.registerSingleton<SessionController>(SessionController(),
       signalsReady: true);

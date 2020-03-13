@@ -8,6 +8,7 @@ import 'package:porri_app/src/pages/login.dart';
 import 'package:porri_app/src/pages/skeleton.dart';
 import 'package:porri_app/src/pages/splash.dart';
 import 'package:porri_app/src/states/session.dart';
+import 'package:porri_app/src/streams/streamsController.dart';
 import 'package:porri_app/src/widgets/fullLoader.dart';
 
 class App extends StatelessWidget {
@@ -23,7 +24,7 @@ class App extends StatelessWidget {
 
   Widget _setUpCompleteStreamWidget() {
     return StreamBuilder<bool>(
-      stream: mainController.initCompleteStream.stream,
+      stream: sl<StreamsController>().initCompleteStream.stream,
       initialData: false,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.hasData && snapshot.data) {
@@ -37,7 +38,7 @@ class App extends StatelessWidget {
 
   Widget _loaderStreamWidget() {
     return StreamBuilder<bool>(
-      stream: mainController.fullLoaderStream.stream,
+      stream: sl<StreamsController>().fullLoaderStream.stream,
       initialData: false,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (!snapshot.data) {
@@ -51,7 +52,7 @@ class App extends StatelessWidget {
 
   Widget _sessionValidationStreamWidget() {
     return StreamBuilder<SessionModel>(
-      stream: sl<SessionState>().updatedSessionStream.stream,
+      stream: sl<StreamsController>().updatedSessionStream.stream,
       initialData: sl<SessionState>().sessionModel,
       builder: (BuildContext context, AsyncSnapshot<SessionModel> snapshot) {
         if (snapshot.hasData && snapshot.data != null) {

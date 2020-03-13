@@ -1,19 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/models/session.dart';
+import 'package:porri_app/src/streams/streamsController.dart';
 
 class SessionState {
   SessionModel sessionModel;
-  StreamController<SessionModel> updatedSessionStream =
-      StreamController.broadcast();
-
-  void dispose() {
-    updatedSessionStream.close();
-  }
 
   void setSession({@required SessionModel session}) {
     sessionModel = session;
-    updatedSessionStream.sink.add(sessionModel);
+    sl<StreamsController>().updatedSessionStream.sink.add(sessionModel);
   }
 }

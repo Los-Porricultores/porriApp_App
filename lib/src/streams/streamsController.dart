@@ -1,0 +1,19 @@
+import 'dart:async';
+
+import 'package:porri_app/src/models/session.dart';
+
+class StreamsController {
+  StreamController<bool> initCompleteStream = StreamController.broadcast(),
+      fullLoaderStream = StreamController.broadcast();
+  StreamController<String> registerValidationErrorStream =
+      StreamController.broadcast();
+  StreamController<SessionModel> updatedSessionStream =
+  StreamController.broadcast();
+
+  void dispose() {
+    initCompleteStream.close();
+    fullLoaderStream.close();
+    registerValidationErrorStream.close();
+    updatedSessionStream.close();
+  }
+}
