@@ -30,6 +30,7 @@ class LoginController {
         (AuthResult result) {
           FirebaseUser user = result.user;
           sl<SessionController>().saveSession(user);
+          mainController.hideFullLoader();
         },
       ).catchError(
         (error) {
@@ -40,6 +41,8 @@ class LoginController {
           mainController.hideFullLoader();
         },
       );
+    }else{
+      mainController.hideFullLoader();
     }
   }
 

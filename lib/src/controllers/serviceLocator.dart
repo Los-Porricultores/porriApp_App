@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:porri_app/src/controllers/database.dart';
-import 'package:porri_app/src/controllers/login.dart';
+import 'package:porri_app/src/controllers/loginController.dart';
 import 'package:porri_app/src/controllers/session.dart';
 import 'package:porri_app/src/states/database.dart';
 import 'package:porri_app/src/states/session.dart';

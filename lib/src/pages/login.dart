@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:porri_app/resources/constants/imagePaths.dart';
+import 'package:porri_app/src/controllers/loginController.dart';
+import 'package:porri_app/src/controllers/serviceLocator.dart';
+import 'package:porri_app/src/models/session.dart';
+import 'package:porri_app/src/streams/streamsController.dart';
 
 class Login extends StatelessWidget {
   final String loginButtonText = 'Entrar',
@@ -30,29 +35,58 @@ class Login extends StatelessWidget {
                 child: ListView(
                   physics: ClampingScrollPhysics(),
                   children: <Widget>[
-                    _loginInputWidget(label: emailInputLabel),
-                    _loginInputWidget(label: passwordInputLabel),
+                    _loginInputWidget(
+                      label: emailInputLabel,
+                      controller: sl<LoginController>().usernameController,
+                    ),
+                    _loginInputWidget(
+                      label: passwordInputLabel,
+                      controller: sl<LoginController>().passwordController,
+                    ),
                     _errorMessageWidget(),
                   ],
                 ),
               ),
             ),
-            _loginButtonWidget(onPressed: () {}),
+            _loginButtonWidget(
+              onPressed: () {
+                sl<LoginController>().sendLogin();
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _loginInputWidget({@required label}) {
+  Widget _loginInputWidget(
+      {@required String label, @required TextEditingController controller}) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(labelText: label),
+      inputFormatters: [BlacklistingTextInputFormatter(RegExp("[ ]"))],
     );
   }
 
   Widget _errorMessageWidget() {
-    return Container(
-      height: 50,
+    return StreamBuilder<String>(
+      stream: sl<StreamsController>().registerValidationErrorStream.stream,
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return Container(
+          alignment: Alignment.center,
+          height: snapshot.data != null ? 150 : 0,
+          child: snapshot.data != null
+              ? Text(
+                  snapshot.data,
+                  style: TextStyle(
+                    color: Colors.deepPurpleAccent,
+                    fontSize: 15,
+                  ),
+                )
+              : null,
+        );
+      },
     );
   }
 
