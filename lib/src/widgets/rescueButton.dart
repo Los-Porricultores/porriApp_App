@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:porri_app/src/controllers/navigationController.dart';
+import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/widgets/commonModal.dart';
 
 class RescueButton extends StatelessWidget {
@@ -19,7 +21,9 @@ class RescueButton extends StatelessWidget {
           context: context,
           builder: (BuildContext buildContext) {
             return CommonModal(modalTitle, modalMessage, modalNegativeButton,
-                modalPositiveButton);
+                modalPositiveButton, () {
+              sl<NavigationController>().pop();
+            }, () {});
           },
         );
       },

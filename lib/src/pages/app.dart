@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:porri_app/resources/constants/appTheme.dart';
 
 import 'package:porri_app/src/controllers/main.dart';
+import 'package:porri_app/src/controllers/navigationController.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
 import 'package:porri_app/src/models/session.dart';
 import 'package:porri_app/src/pages/login.dart';
@@ -55,6 +56,8 @@ class App extends StatelessWidget {
       stream: sl<StreamsController>().updatedSessionStream.stream,
       initialData: sl<SessionState>().sessionModel,
       builder: (BuildContext context, AsyncSnapshot<SessionModel> snapshot) {
+        sl<NavigationController>().setGeneralContext(buildContext: context);
+
         if (snapshot.hasData && snapshot.data != null) {
           mainController.hideFullLoader();
           return Skeleton();

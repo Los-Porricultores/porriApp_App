@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:porri_app/src/controllers/database.dart';
 import 'package:porri_app/src/controllers/loginController.dart';
+import 'package:porri_app/src/controllers/navigationController.dart';
 import 'package:porri_app/src/controllers/session.dart';
 import 'package:porri_app/src/states/database.dart';
+import 'package:porri_app/src/states/navigationState.dart';
 import 'package:porri_app/src/states/session.dart';
 import 'package:porri_app/src/streams/streamsController.dart';
 
@@ -12,6 +14,7 @@ Future<void> setUp() async {
   // States
   sl.registerSingleton<DatabaseState>(DatabaseState(), signalsReady: true);
   sl.registerSingleton<SessionState>(SessionState(), signalsReady: true);
+  sl.registerSingleton<NavigationState>(NavigationState(), signalsReady: true);
 
   // controllers
   sl.registerSingleton<DatabaseController>(DatabaseController(),
@@ -21,4 +24,6 @@ Future<void> setUp() async {
   sl.registerSingleton<SessionController>(SessionController(),
       signalsReady: true);
   sl.registerSingleton<LoginController>(LoginController(), signalsReady: true);
+  sl.registerSingleton<NavigationController>(NavigationController(),
+      signalsReady: true);
 }

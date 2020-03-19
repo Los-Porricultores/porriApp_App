@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:porri_app/resources/constants/imagePaths.dart';
 import 'package:porri_app/src/controllers/loginController.dart';
 import 'package:porri_app/src/controllers/serviceLocator.dart';
-import 'package:porri_app/src/models/session.dart';
 import 'package:porri_app/src/streams/streamsController.dart';
 
 class Login extends StatelessWidget {

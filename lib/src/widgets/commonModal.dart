@@ -5,12 +5,15 @@ class CommonModal extends StatelessWidget {
       modalMessage,
       modalNegativeButton,
       modalPositiveButton;
+  final Function negativeFunction, positiveFunction;
 
   CommonModal(
     this.modalTitle,
     this.modalMessage,
     this.modalNegativeButton,
     this.modalPositiveButton,
+    this.negativeFunction,
+    this.positiveFunction,
   );
 
   @override
@@ -47,16 +50,22 @@ class CommonModal extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Chip(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  backgroundColor: Colors.redAccent,
-                  label: Text(modalNegativeButton),
+                InkWell(
+                  onTap: negativeFunction,
+                  child: Chip(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    backgroundColor: Colors.redAccent,
+                    label: Text(modalNegativeButton),
+                  ),
                 ),
-                Chip(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  backgroundColor: Colors.lightGreen,
-                  label: Text(modalPositiveButton),
-                )
+                InkWell(
+                  onTap: negativeFunction,
+                  child: Chip(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    backgroundColor: Colors.lightGreen,
+                    label: Text(modalPositiveButton),
+                  ),
+                ),
               ],
             ),
           ),
